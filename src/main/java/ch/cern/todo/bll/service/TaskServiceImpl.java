@@ -3,9 +3,11 @@ package ch.cern.todo.bll.service;
 import ch.cern.todo.api.dto.TaskDTO;
 import ch.cern.todo.bll.interfaces.TaskService;
 
+import java.util.Collection;
+
 public class TaskServiceImpl implements TaskService {
     @Override
-    public TaskDTO getAll() {
+    public Collection<TaskDTO> getAll() {
         return null;
     }
 
