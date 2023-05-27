@@ -11,12 +11,17 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
+@Table(name = "TASK_CATEGORIES")
 public class CategoryEntity {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "CATEGORY_ID", nullable = false, columnDefinition = "NUMBER")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "CATEGORY_NAME", nullable = false,  unique = true, columnDefinition = "VARCHAR2(100 BYTE)")
     private String name;
+
+    @Column(name = "TASK_DESCRIPTION", columnDefinition = "VARCHAR2(500 BYTE)")
     private String description;
 
     public Long getId() {
@@ -40,3 +45,4 @@ public class CategoryEntity {
         return getClass().hashCode();
     }
 }
+

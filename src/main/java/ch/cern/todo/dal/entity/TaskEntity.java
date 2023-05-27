@@ -1,6 +1,9 @@
 package ch.cern.todo.dal.entity;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -12,14 +15,23 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Entity
+@Table(name = "TASKS")
 public class TaskEntity {
     @Id
+    @Column(name = "TASK_ID", nullable = false, columnDefinition = "NUMBER")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "TASK_NAME", nullable = false, columnDefinition = "VARCHAR2(100 BYTE)")
     private String name;
+
+    @Column(name = "TASK_DESCRIPTION", columnDefinition = "VARCHAR2(500 BYTE)")
     private String description;
+
+    @Column(name = "DEADLINE", nullable = false, columnDefinition = "TIMESTAMP")
     private LocalDate deadline;
 
+    @JoinColumn(name = "CATEGORY_ID", nullable = false, columnDefinition = "NUMBER")
     @ManyToOne
     private CategoryEntity category;
 
