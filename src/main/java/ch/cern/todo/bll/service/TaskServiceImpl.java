@@ -1,14 +1,11 @@
 package ch.cern.todo.bll.service;
 
-import ch.cern.todo.api.dto.CategoryDTO;
 import ch.cern.todo.api.dto.TaskDTO;
 import ch.cern.todo.bll.exception.NoSuchEntityException;
 import ch.cern.todo.bll.interfaces.TaskService;
-import ch.cern.todo.dal.entity.CategoryEntity;
 import ch.cern.todo.dal.entity.TaskEntity;
 import ch.cern.todo.dal.repository.CategoryRepository;
 import ch.cern.todo.dal.repository.TaskRepository;
-import ch.cern.todo.mapping.CategoryMapper;
 import ch.cern.todo.mapping.TaskMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -19,7 +16,6 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final CategoryRepository categoryRepository;
     private final TaskMapper taskMapper;
-    private final CategoryMapper categoryMapper;
 
     @Override
     public Collection<TaskDTO> getAll() {

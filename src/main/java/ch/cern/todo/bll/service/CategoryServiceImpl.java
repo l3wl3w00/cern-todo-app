@@ -1,58 +1,62 @@
 package ch.cern.todo.bll.service;
 
 import ch.cern.todo.api.dto.CategoryDTO;
+import ch.cern.todo.api.dto.ResponseCategoryDTO;
 import ch.cern.todo.bll.exception.NoSuchEntityException;
 import ch.cern.todo.bll.interfaces.CategoryService;
 import ch.cern.todo.dal.entity.CategoryEntity;
 import ch.cern.todo.dal.repository.CategoryRepository;
 import ch.cern.todo.mapping.CategoryMapper;
+import ch.cern.todo.mapping.CategoryResponseMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
-import java.util.Optional;
 
+@Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     private final CategoryMapper mapper;
+    private final CategoryResponseMapper responseMapper;
 
     @Override
-    public Collection<CategoryDTO> getAll() {
-        return mapper.toDTOCollection(repository.findAll());
+    public Collection<ResponseCategoryDTO> getAll() {
+        return responseMapper.toDTOCollection(repository.findAll());
     }
 
     @Override
-    public CategoryDTO getById(Long id) {
-        return mapper.toDTO(findOrThrow(id));
+    public ResponseCategoryDTO getById(Long id) {
+        return responseMapper.toDTO(findOrThrow(id));
     }
 
     @Override
-    public CategoryDTO add(CategoryDTO categoryDTO) {
+    public ResponseCategoryDTO add(CategoryDTO categoryDTO) {
         return addOrUpdate(categoryDTO);
     }
 
     @Override
-    public CategoryDTO update(CategoryDTO categoryDTO) {
+    public ResponseCategoryDTO update(CategoryDTO categoryDTO) {
         return addOrUpdate(categoryDTO);
     }
 
     @Override
     @Transactional
-    public CategoryDTO deleteById(Long id) {
+    public ResponseCategoryDTO deleteById(Long id) {
         var entity = findOrThrow(id);
 
         repository.deleteById(id);
 
-        return mapper.toDTO(entity);
+        return responseMapper.toDTO(entity);
     }
 
-    private CategoryDTO addOrUpdate(CategoryDTO categoryDTO){
+    private ResponseCategoryDTO addOrUpdate(CategoryDTO categoryDTO){
         var mappedEntity = mapper.toEntity(categoryDTO);
 
         var savedEntity = repository.save(mappedEntity);
 
-        return mapper.toDTO(savedEntity);
+        return responseMapper.toDTO(savedEntity);
     }
 
     private CategoryEntity findOrThrow(Long id) {
