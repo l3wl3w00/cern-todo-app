@@ -15,6 +15,20 @@ public class Response {
         setStatusName(status.getReasonPhrase());
     }
 
+    public static Response conflict(String message) {
+        Response response =  new Response();
+        response.setStatus(HttpStatus.CONFLICT);
+        response.setDescription("The requested operation cannot be performed due to a constraint violation");
+        response.setAdditionalInfo(message);
+        return response;
+    }
+    public static Response badRequest(String message) {
+        Response response =  new Response();
+        response.setStatus(HttpStatus.BAD_REQUEST);
+        response.setDescription("The request is invalid");
+        response.setAdditionalInfo(message);
+        return response;
+    }
     public static Response notFound() {
         return notFound("");
     }

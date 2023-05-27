@@ -1,6 +1,7 @@
 package ch.cern.todo.dal.entity;
 
 import ch.cern.todo.bll.dto.TaskDTO;
+import ch.cern.todo.config.Config;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,7 +21,6 @@ import static ch.cern.todo.bll.dto.TaskDTO.MAX_NAME_LENGTH;
 @Entity
 @Table(name = "TASKS")
 public class TaskEntity {
-    static final String NAME_TYPE = "VARCHAR2(" + MAX_NAME_LENGTH + "BYTE)";
 
     @Id
     @Column(name = "TASK_ID", nullable = false, columnDefinition = "NUMBER")
@@ -29,11 +29,11 @@ public class TaskEntity {
 
     @Column(name = "TASK_NAME",
             nullable = false,
-            columnDefinition = "VARCHAR2(${constraints.maxTaskNameLength} BYTE)")
+            length = 100)
     private String name;
 
     @Column(name = "TASK_DESCRIPTION",
-            columnDefinition =  "VARCHAR2(${constraints.maxTaskDescriptionLength} BYTE)")
+            length = 500)
     private String description;
 
     @Column(name = "DEADLINE", nullable = false, columnDefinition = "TIMESTAMP")

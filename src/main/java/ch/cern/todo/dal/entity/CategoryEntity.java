@@ -1,5 +1,6 @@
 package ch.cern.todo.dal.entity;
 
+import ch.cern.todo.config.Config;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -23,11 +24,12 @@ public class CategoryEntity {
     @Column(name = "CATEGORY_NAME",
             nullable = false,
             unique = true,
-            columnDefinition =  "VARCHAR2(${constraints.maxCategoryNameLength} BYTE)")
+            length = 100)
     private String name;
 
+    static final int a = 100;
     @Column(name = "TASK_DESCRIPTION",
-            columnDefinition = "VARCHAR2(${maxCategoryDescriptionLength} BYTE)")
+            length = 500)
     private String description;
 
     public Long getId() {

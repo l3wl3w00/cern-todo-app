@@ -16,29 +16,27 @@ public class CategoryController {
     private final ResponseFactory responseFactory;
     private final Config config;
     @GetMapping
-    Response getAll() {
-        System.out.println("asd");
-        System.out.println(config.getMaxTaskNameLength());
+    Response getAll() {;
         return responseFactory.ok(categoryService::getAll);
     }
 
     @GetMapping("{id}")
     Response getById(@PathVariable Long id) {
-        return responseFactory.okOrNotFound(() -> categoryService.getById(id));
+        return responseFactory.okOrHandleError(() -> categoryService.getById(id));
     }
 
     @PostMapping
     Response add(@RequestBody CategoryDTO body) {
-        return responseFactory.createdOrNotFound(() -> categoryService.add(body));
+        return responseFactory.createdOrHandleError(() -> categoryService.add(body));
     }
 
     @PutMapping("{id}")
     Response update(@PathVariable Long id, @RequestBody CategoryDTO body) {
-        return responseFactory.okOrNotFound(() -> categoryService.update(id, body));
+        return responseFactory.okOrHandleError(() -> categoryService.update(id, body));
     }
 
     @DeleteMapping("{id}")
     Response deleteById(@PathVariable Long id) {
-        return responseFactory.deletedOrNotFound(() -> categoryService.deleteById(id));
+        return responseFactory.deletedOrHandleError(() -> categoryService.deleteById(id));
     }
 }

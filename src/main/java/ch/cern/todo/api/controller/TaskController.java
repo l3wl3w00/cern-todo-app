@@ -21,22 +21,22 @@ public class TaskController {
 
     @GetMapping("{id}")
     Response getById(@PathVariable Long id) {
-        return responseFactory.okOrNotFound(() -> taskService.getById(id));
+        return responseFactory.okOrHandleError(() -> taskService.getById(id));
     }
 
     @PostMapping
     Response add(@RequestBody TaskDTO body) {
-        return responseFactory.createdOrNotFound(() -> taskService.add(body));
+        return responseFactory.createdOrHandleError(() -> taskService.add(body));
     }
 
     @PutMapping("{id}")
     Response update(@PathVariable Long id, @RequestBody TaskDTO body) {
-        return responseFactory.okOrNotFound(() -> taskService.update(id,body));
+        return responseFactory.okOrHandleError(() -> taskService.update(id,body));
     }
 
     @DeleteMapping("{id}")
     Response deleteById(@PathVariable Long id) {
-        return responseFactory.deletedOrNotFound(() -> taskService.deleteById(id));
+        return responseFactory.deletedOrHandleError(() -> taskService.deleteById(id));
     }
 
 

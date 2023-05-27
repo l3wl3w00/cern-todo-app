@@ -1,7 +1,9 @@
 package ch.cern.todo.bll.service;
 
+import ch.cern.todo.bll.constants.EnglishStrings;
 import ch.cern.todo.bll.dto.ResponseTaskDTO;
 import ch.cern.todo.bll.dto.TaskDTO;
+import ch.cern.todo.bll.exception.EntityAlreadyExistsException;
 import ch.cern.todo.bll.exception.EntityNotFoundException;
 import ch.cern.todo.bll.exception.InvalidDTOException;
 import ch.cern.todo.bll.interfaces.TaskService;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Collection;
 import java.util.function.Consumer;
 
@@ -40,6 +43,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public ResponseTaskDTO add(TaskDTO taskDTO) {
+        assertValid(taskDTO);
         return saveTask(taskDTO, e -> {});
     }
 
@@ -47,6 +51,8 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public ResponseTaskDTO update(Long id, TaskDTO taskDTO) {
+        // assert it is valid first, because that is faster, and only then assert it exists
+        assertValid(taskDTO);
         assertExists(id);
 
         return saveTask(taskDTO, e -> e.setId(id));
@@ -65,11 +71,24 @@ public class TaskServiceImpl implements TaskService {
     }
 
     private void assertValid(TaskDTO taskDTO){
-        var descriptionLength = taskDTO.getDescription().length();
-        if (descriptionLength > 500)
-            throw new InvalidDTOException(
-                    String.format("The description of the task is too long! It is %d, and it should be %d or less!",descriptionLength, config.getMaxTaskNameLength()));
+        assertDescriptionLengthValid(taskDTO);
+        assertNameLengthValid(taskDTO);
     }
+
+    private void assertNameLengthValid(TaskDTO taskDTO) {
+        var nameLength = taskDTO.getName().length();
+        if (nameLength > config.getMaxTaskNameLength())
+            throw new InvalidDTOException(
+                    String.format(EnglishStrings.TOO_LONG_TASK_NAME.getValue(), nameLength, config.getMaxTaskNameLength()));
+    }
+
+    private void assertDescriptionLengthValid(TaskDTO taskDTO) {
+        var descriptionLength = taskDTO.getDescription().length();
+        if (descriptionLength > config.getMaxTaskDescriptionLength())
+            throw new InvalidDTOException(
+                    String.format(EnglishStrings.TOO_LONG_TASK_DESCRIPTION.getValue(), descriptionLength, config.getMaxTaskDescriptionLength()));
+    }
+
     private ResponseTaskDTO saveTask(TaskDTO taskDTO, Consumer<TaskEntity> actionOnEntityBeforeSave) {
         var categoryEntity = findCategoryOrThrow(taskDTO.getCategoryName());
         var mappedEntity = taskMapper.toEntity(taskDTO);
@@ -77,9 +96,10 @@ public class TaskServiceImpl implements TaskService {
         mappedEntity.setCategory(categoryEntity);
         actionOnEntityBeforeSave.accept(mappedEntity);
 
-        var savedEntity = taskRepository.save(mappedEntity);
+        TaskEntity savedEntity = taskRepository.save(mappedEntity);
         return taskResponseMapper.toDTO(savedEntity);
     }
+
 
     private TaskEntity findTaskOrThrow(Long id) {
         return taskRepository
