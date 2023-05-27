@@ -10,7 +10,6 @@ public class ContentResponse<DTO> extends Response{
     DTO dto;
 
 
-
     public static <DTO> ContentResponse<DTO> ok(DTO dto){
         ContentResponse<DTO> contentResponse =  new ContentResponse<>();
 

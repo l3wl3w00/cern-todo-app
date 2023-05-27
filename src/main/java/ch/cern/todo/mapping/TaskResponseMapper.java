@@ -6,10 +6,8 @@ import ch.cern.todo.dal.entity.TaskEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.Collection;
-
-@Mapper(uses = CategoryMapper.class)
-public interface TaskMapper extends GenericMapper<TaskDTO, TaskEntity> {
+@Mapper(uses = CategoryResponseMapper.class)
+public interface TaskResponseMapper extends GenericMapper<ResponseTaskDTO, TaskEntity> {
     @Mapping(source = "category.name", target = "categoryName")
-    TaskDTO toDTO(TaskEntity entity);
+    ResponseTaskDTO toDTO(TaskEntity entity);
 }

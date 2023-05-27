@@ -29,6 +29,12 @@ public class TodoApplication {
 
 	@Primary
 	@Bean
+	public TaskResponseMapper createTaskResponseMapper() {
+		return new TaskResponseMapperImpl();
+	}
+
+	@Primary
+	@Bean
 	public TaskMapper createTaskMapper() {
 		return new TaskMapperImpl();
 	}

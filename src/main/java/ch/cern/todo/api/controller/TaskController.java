@@ -2,29 +2,42 @@ package ch.cern.todo.api.controller;
 
 import ch.cern.todo.api.dto.CategoryDTO;
 import ch.cern.todo.api.dto.TaskDTO;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import ch.cern.todo.api.response.ContentResponse;
+import ch.cern.todo.api.response.Response;
+import ch.cern.todo.bll.interfaces.TaskService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("task")
 public class TaskController {
+    private final TaskService taskService;
 
     @GetMapping
-    Collection<TaskDTO> getAll(){
-        var response = new ArrayList<TaskDTO>();
+    Response getAll() {
+        return ContentResponse.ok(taskService.getAll());
+    }
 
-        var taskDto = new TaskDTO();
-        taskDto.setName("task1");
-        taskDto.setDescription("description2");
-        taskDto.setDeadline(LocalDate.now());
-        taskDto.setCategory(new CategoryDTO("category1", "description1"));
+    @GetMapping("{id}")
+    Response getById(@PathVariable Long id) {
+        return ContentResponse.ok(taskService.getById(id));
+    }
 
-        response.add(taskDto);
-        return response;
+    @PostMapping
+    Response add(@RequestBody TaskDTO body) {
+        return ContentResponse.created(taskService.add(body));
+    }
+
+    @PutMapping("{id}")
+    Response update(@PathVariable Long id, @RequestBody TaskDTO body) {
+
+        return ContentResponse.ok(taskService.update(id, body));
+    }
+
+    @DeleteMapping("{id}")
+    Response deleteById(@PathVariable Long id) {
+        taskService.deleteById(id);
+        return Response.noContent();
     }
 }

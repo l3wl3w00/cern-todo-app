@@ -2,7 +2,7 @@ package ch.cern.todo.bll.service;
 
 import ch.cern.todo.api.dto.CategoryDTO;
 import ch.cern.todo.api.dto.ResponseCategoryDTO;
-import ch.cern.todo.bll.exception.NoSuchEntityException;
+import ch.cern.todo.bll.exception.EntityNotFoundException;
 import ch.cern.todo.bll.interfaces.CategoryService;
 import ch.cern.todo.dal.entity.CategoryEntity;
 import ch.cern.todo.dal.repository.CategoryRepository;
@@ -65,6 +65,6 @@ public class CategoryServiceImpl implements CategoryService {
         return repository
             .findById(id)
             .orElseThrow(() ->
-                    new NoSuchEntityException(CategoryEntity.class,id));
+                    new EntityNotFoundException(CategoryEntity.class,id));
     }
 }

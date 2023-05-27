@@ -7,9 +7,9 @@ import lombok.Setter;
 public class ResponseCategoryDTO {
     @Getter
     @Setter
-    Long id;
+    private Long id;
 
-    CategoryDTO categoryDTO = new CategoryDTO();
+    private final CategoryDTO categoryDTO = new CategoryDTO();
 
     public String getName() {
         return categoryDTO.getName();
