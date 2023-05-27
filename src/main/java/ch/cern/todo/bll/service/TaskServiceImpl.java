@@ -2,7 +2,6 @@ package ch.cern.todo.bll.service;
 
 import ch.cern.todo.api.dto.ResponseTaskDTO;
 import ch.cern.todo.api.dto.TaskDTO;
-import ch.cern.todo.bll.exception.CategoryNotFoundException;
 import ch.cern.todo.bll.exception.EntityNotFoundException;
 import ch.cern.todo.bll.interfaces.TaskService;
 import ch.cern.todo.dal.entity.CategoryEntity;
@@ -47,6 +46,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ResponseTaskDTO update(Long id, TaskDTO taskDTO) {
         assertExists(id);
+
         return saveTask(taskDTO, e -> e.setId(id));
     }
 
@@ -54,12 +54,9 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public ResponseTaskDTO deleteById(Long id) {
         var entity = findTaskOrThrow(id);
-
         taskRepository.deleteById(id);
-
         return taskResponseMapper.toDTO(entity);
     }
-
     private void assertExists(Long id) {
         if (!taskRepository.existsById(id))
             throw new EntityNotFoundException(TaskEntity.class, id);
@@ -86,6 +83,7 @@ public class TaskServiceImpl implements TaskService {
     private CategoryEntity findCategoryOrThrow(String name) {
         return categoryRepository
                 .findByName(name)
-                .orElseThrow(() -> new CategoryNotFoundException(name));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("No category was found with name " + name));
     }
 }

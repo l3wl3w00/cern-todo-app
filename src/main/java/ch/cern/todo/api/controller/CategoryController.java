@@ -40,6 +40,6 @@ public class CategoryController {
     @DeleteMapping("{id}")
     Response deleteById(@PathVariable Long id) {
         categoryService.deleteById(id);
-        return Response.noContent();
+        return Response.deleted();
     }
 }
