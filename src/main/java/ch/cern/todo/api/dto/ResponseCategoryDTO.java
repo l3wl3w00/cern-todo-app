@@ -9,7 +9,7 @@ public class ResponseCategoryDTO {
     @Setter
     Long id;
 
-    CategoryDTO categoryDTO;
+    CategoryDTO categoryDTO = new CategoryDTO();
 
     public String getName() {
         return categoryDTO.getName();
