@@ -1,4 +1,4 @@
-package ch.cern.todo.api.exception;
+package ch.cern.todo.api.response;
 
 import ch.cern.todo.api.response.ContentResponse;
 import ch.cern.todo.api.response.Response;

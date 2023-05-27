@@ -1,7 +1,7 @@
 package ch.cern.todo.api.controller;
 
 import ch.cern.todo.api.dto.TaskDTO;
-import ch.cern.todo.api.exception.ResponseFactory;
+import ch.cern.todo.api.response.ResponseFactory;
 import ch.cern.todo.api.response.Response;
 import ch.cern.todo.bll.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
