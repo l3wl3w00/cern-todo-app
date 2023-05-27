@@ -10,7 +10,7 @@ public class Response {
     String description = "";
     String additionalInfo = "";
 
-    protected void setStatus(HttpStatus status){
+    protected void setStatus(HttpStatus status) {
         setStatusCode(status.value());
         setStatusName(status.getReasonPhrase());
     }

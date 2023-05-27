@@ -31,13 +31,11 @@ public class TaskController {
 
     @PutMapping("{id}")
     Response update(@PathVariable Long id, @RequestBody TaskDTO body) {
-
         return responseFactory.okOrNotFound(() -> taskService.update(id,body));
     }
 
     @DeleteMapping("{id}")
     Response deleteById(@PathVariable Long id) {
-
         return responseFactory.deletedOrNotFound(() -> taskService.deleteById(id));
     }
 

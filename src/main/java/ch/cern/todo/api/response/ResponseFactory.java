@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 @Component
 public class ResponseFactory {
 
-    public <DTO> Response okOrNotFound(Supplier<DTO> throwingFunction){
+    public <DTO> Response okOrNotFound(Supplier<DTO> throwingFunction) {
         try {
             return ContentResponse.ok(throwingFunction.get());
         } catch (EntityNotFoundException e) {

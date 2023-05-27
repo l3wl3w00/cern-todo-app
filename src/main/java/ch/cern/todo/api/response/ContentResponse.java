@@ -10,7 +10,7 @@ public class ContentResponse<DTO> extends Response{
     DTO dto;
 
 
-    public static <DTO> ContentResponse<DTO> ok(DTO dto){
+    public static <DTO> ContentResponse<DTO> ok(DTO dto) {
         ContentResponse<DTO> contentResponse =  new ContentResponse<>();
 
         contentResponse.setDto(dto);
@@ -19,7 +19,7 @@ public class ContentResponse<DTO> extends Response{
         return contentResponse;
     }
 
-    public static <DTO> ContentResponse<DTO> created(DTO dto){
+    public static <DTO> ContentResponse<DTO> created(DTO dto) {
         ContentResponse<DTO> contentResponse =  new ContentResponse<>();
 
         contentResponse.setDto(dto);

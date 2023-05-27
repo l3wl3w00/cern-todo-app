@@ -9,15 +9,5 @@ import java.util.Collection;
 
 //@Mapper
 @Mapper
-public interface CategoryMapper
-//        extends GenericMapper<CategoryDTO,CategoryEntity>
-{
-
-    CategoryDTO toDTO(CategoryEntity entity);
-    Collection<CategoryDTO> toDTOCollection(Collection<CategoryEntity> entities);
-
-    CategoryEntity toEntity(CategoryDTO dto);
-    Collection<CategoryEntity> toEntityCollection(Collection<CategoryDTO> dtos);
-
-
+public interface CategoryMapper extends GenericMapper<CategoryDTO,CategoryEntity> {
 }
