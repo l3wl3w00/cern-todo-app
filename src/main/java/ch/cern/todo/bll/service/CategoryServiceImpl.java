@@ -33,12 +33,22 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseCategoryDTO add(CategoryDTO categoryDTO) {
-        return addOrUpdate(categoryDTO);
+        var mappedEntity = mapper.toEntity(categoryDTO);
+
+        var savedEntity = repository.save(mappedEntity);
+
+        return responseMapper.toDTO(savedEntity);
     }
 
     @Override
-    public ResponseCategoryDTO update(CategoryDTO categoryDTO) {
-        return addOrUpdate(categoryDTO);
+    public ResponseCategoryDTO update(Long id, CategoryDTO categoryDTO) {
+        var mappedEntity = mapper.toEntity(categoryDTO);
+
+        mappedEntity.setId(id);
+
+        var savedEntity = repository.save(mappedEntity);
+
+        return responseMapper.toDTO(savedEntity);
     }
 
     @Override
@@ -49,14 +59,6 @@ public class CategoryServiceImpl implements CategoryService {
         repository.deleteById(id);
 
         return responseMapper.toDTO(entity);
-    }
-
-    private ResponseCategoryDTO addOrUpdate(CategoryDTO categoryDTO){
-        var mappedEntity = mapper.toEntity(categoryDTO);
-
-        var savedEntity = repository.save(mappedEntity);
-
-        return responseMapper.toDTO(savedEntity);
     }
 
     private CategoryEntity findOrThrow(Long id) {

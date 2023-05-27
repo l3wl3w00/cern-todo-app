@@ -2,7 +2,6 @@ package ch.cern.todo.bll.interfaces;
 
 import ch.cern.todo.api.dto.CategoryDTO;
 import ch.cern.todo.api.dto.ResponseCategoryDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 public interface CategoryService {
@@ -13,7 +12,7 @@ public interface CategoryService {
 
     ResponseCategoryDTO add(CategoryDTO categoryDTO);
 
-    ResponseCategoryDTO update(CategoryDTO categoryDTO);
+    ResponseCategoryDTO update(Long id, CategoryDTO categoryDTO);
 
     ResponseCategoryDTO deleteById(Long id);
 }

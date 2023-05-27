@@ -33,7 +33,7 @@ public class CategoryController {
     @PutMapping("{id}")
     Response<ResponseCategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO body) {
 
-        return Response.ok(categoryService.update(body));
+        return Response.ok(categoryService.update(id, body));
     }
 
     @DeleteMapping("{id}")
