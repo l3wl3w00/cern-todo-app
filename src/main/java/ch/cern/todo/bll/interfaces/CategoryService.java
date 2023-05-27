@@ -1,7 +1,7 @@
 package ch.cern.todo.bll.interfaces;
 
-import ch.cern.todo.api.dto.CategoryDTO;
-import ch.cern.todo.api.dto.ResponseCategoryDTO;
+import ch.cern.todo.bll.dto.CategoryDTO;
+import ch.cern.todo.bll.dto.ResponseCategoryDTO;
 
 import java.util.Collection;
 public interface CategoryService {

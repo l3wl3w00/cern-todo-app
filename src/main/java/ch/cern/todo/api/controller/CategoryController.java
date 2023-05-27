@@ -1,9 +1,10 @@
 package ch.cern.todo.api.controller;
 
 import ch.cern.todo.api.response.ResponseFactory;
-import ch.cern.todo.api.dto.CategoryDTO;
+import ch.cern.todo.bll.dto.CategoryDTO;
 import ch.cern.todo.api.response.Response;
 import ch.cern.todo.bll.interfaces.CategoryService;
+import ch.cern.todo.config.Config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.*;
 public class CategoryController {
     private final CategoryService categoryService;
     private final ResponseFactory responseFactory;
-
+    private final Config config;
     @GetMapping
     Response getAll() {
+        System.out.println("asd");
+        System.out.println(config.getMaxTaskNameLength());
         return responseFactory.ok(categoryService::getAll);
     }
 

@@ -1,9 +1,11 @@
 package ch.cern.todo.bll.service;
 
-import ch.cern.todo.api.dto.ResponseTaskDTO;
-import ch.cern.todo.api.dto.TaskDTO;
+import ch.cern.todo.bll.dto.ResponseTaskDTO;
+import ch.cern.todo.bll.dto.TaskDTO;
 import ch.cern.todo.bll.exception.EntityNotFoundException;
+import ch.cern.todo.bll.exception.InvalidDTOException;
 import ch.cern.todo.bll.interfaces.TaskService;
+import ch.cern.todo.config.Config;
 import ch.cern.todo.dal.entity.CategoryEntity;
 import ch.cern.todo.dal.entity.TaskEntity;
 import ch.cern.todo.dal.repository.CategoryRepository;
@@ -24,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
     private final CategoryRepository categoryRepository;
     private final TaskResponseMapper taskResponseMapper;
     private final TaskMapper taskMapper;
-
+    private final Config config;
     @Override
     public Collection<ResponseTaskDTO> getAll() {
         return taskResponseMapper.toDTOCollection(taskRepository.findAll());
@@ -62,6 +64,12 @@ public class TaskServiceImpl implements TaskService {
             throw new EntityNotFoundException(TaskEntity.class, id);
     }
 
+    private void assertValid(TaskDTO taskDTO){
+        var descriptionLength = taskDTO.getDescription().length();
+        if (descriptionLength > 500)
+            throw new InvalidDTOException(
+                    String.format("The description of the task is too long! It is %d, and it should be %d or less!",descriptionLength, config.getMaxTaskNameLength()));
+    }
     private ResponseTaskDTO saveTask(TaskDTO taskDTO, Consumer<TaskEntity> actionOnEntityBeforeSave) {
         var categoryEntity = findCategoryOrThrow(taskDTO.getCategoryName());
         var mappedEntity = taskMapper.toEntity(taskDTO);

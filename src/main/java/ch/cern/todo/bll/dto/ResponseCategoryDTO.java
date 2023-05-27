@@ -1,4 +1,4 @@
-package ch.cern.todo.api.dto;
+package ch.cern.todo.bll.dto;
 
 
 import lombok.Getter;

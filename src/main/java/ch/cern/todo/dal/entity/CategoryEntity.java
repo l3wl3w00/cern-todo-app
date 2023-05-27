@@ -14,14 +14,20 @@ import java.util.Objects;
 @Table(name = "TASK_CATEGORIES")
 public class CategoryEntity {
     @Id
-    @Column(name = "CATEGORY_ID", nullable = false, columnDefinition = "NUMBER")
+    @Column(name = "CATEGORY_ID",
+            nullable = false,
+            columnDefinition = "NUMBER")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CATEGORY_NAME", nullable = false,  unique = true, columnDefinition = "VARCHAR2(100 BYTE)")
+    @Column(name = "CATEGORY_NAME",
+            nullable = false,
+            unique = true,
+            columnDefinition =  "VARCHAR2(${constraints.maxCategoryNameLength} BYTE)")
     private String name;
 
-    @Column(name = "TASK_DESCRIPTION", columnDefinition = "VARCHAR2(500 BYTE)")
+    @Column(name = "TASK_DESCRIPTION",
+            columnDefinition = "VARCHAR2(${maxCategoryDescriptionLength} BYTE)")
     private String description;
 
     public Long getId() {

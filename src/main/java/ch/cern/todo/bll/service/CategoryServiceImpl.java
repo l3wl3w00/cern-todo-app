@@ -1,13 +1,10 @@
 package ch.cern.todo.bll.service;
 
-import ch.cern.todo.api.dto.CategoryDTO;
-import ch.cern.todo.api.dto.ResponseCategoryDTO;
-import ch.cern.todo.api.dto.ResponseTaskDTO;
-import ch.cern.todo.api.dto.TaskDTO;
+import ch.cern.todo.bll.dto.CategoryDTO;
+import ch.cern.todo.bll.dto.ResponseCategoryDTO;
 import ch.cern.todo.bll.exception.EntityNotFoundException;
 import ch.cern.todo.bll.interfaces.CategoryService;
 import ch.cern.todo.dal.entity.CategoryEntity;
-import ch.cern.todo.dal.entity.TaskEntity;
 import ch.cern.todo.dal.repository.CategoryRepository;
 import ch.cern.todo.mapping.CategoryMapper;
 import ch.cern.todo.mapping.CategoryResponseMapper;
