@@ -4,17 +4,18 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class Response<DTO> {
-    DTO dto;
-    HttpStatus status;
-    String description;
+public class Response {
+    String statusName;
+    Integer statusCode;
+    String description = "";
+    protected void setStatus(HttpStatus status){
+        setStatusCode(status.value());
+        setStatusName(status.getReasonPhrase());
+    }
+    public static Response noContent(){
+        Response response =  new Response();
 
-    public static <DTO> Response<DTO> ok(DTO dto){
-        Response<DTO> response =  new Response<>();
-
-        response.setDto(dto);
-        response.setStatus(HttpStatus.OK);
-        response.setDescription("");
+        response.setStatus(HttpStatus.NO_CONTENT);
 
         return response;
     }
