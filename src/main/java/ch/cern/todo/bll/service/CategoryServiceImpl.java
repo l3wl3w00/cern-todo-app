@@ -82,16 +82,16 @@ public class CategoryServiceImpl implements CategoryService {
         assertNameLengthValid(categoryDTO);
     }
 
-    private void assertNameLengthValid(CategoryDTO taskDTO) {
-        var nameLength = taskDTO.getName().length();
+    private void assertNameLengthValid(CategoryDTO categoryDTO) {
+        var nameLength = categoryDTO.getName().length();
         if (nameLength > config.getMaxCategoryNameLength())
             throw new InvalidDTOException(
                 EnglishStrings.TOO_LONG_CATEGORY_NAME
                     .formatted(nameLength, config.getMaxCategoryNameLength()));
     }
 
-    private void assertDescriptionLengthValid(CategoryDTO taskDTO) {
-        var descriptionLength = taskDTO.getDescription().length();
+    private void assertDescriptionLengthValid(CategoryDTO categoryDTO) {
+        var descriptionLength = categoryDTO.getDescription().length();
         if (descriptionLength > config.getMaxCategoryDescriptionLength())
             throw new InvalidDTOException(
                 EnglishStrings.TOO_LONG_CATEGORY_DESCRIPTION
