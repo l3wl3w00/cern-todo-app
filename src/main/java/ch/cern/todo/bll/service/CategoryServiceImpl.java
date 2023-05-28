@@ -72,7 +72,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             return saveCategory(categoryDTO, actionOnEntityBeforeSave);
         } catch (DataIntegrityViolationException e) {
-            var message = String.format(EnglishStrings.CATEGORY_WITH_NAME_EXITS.getValue(), categoryDTO.getName());
+            var message = EnglishStrings.CATEGORY_WITH_NAME_EXITS.formatted(categoryDTO.getName());
             throw new EntityAlreadyExistsException(message);
         }
     }
@@ -86,14 +86,16 @@ public class CategoryServiceImpl implements CategoryService {
         var nameLength = categoryDTO.getName().length();
         if (nameLength > config.getMaxCategoryNameLength())
             throw new InvalidDTOException(
-                    String.format(EnglishStrings.TOO_LONG_CATEGORY_NAME.getValue(), nameLength, config.getMaxCategoryNameLength()));
+                EnglishStrings.TOO_LONG_CATEGORY_NAME
+                    .formatted(nameLength, config.getMaxCategoryNameLength()));
     }
 
     private void assertDescriptionLengthValid(CategoryDTO categoryDTO) {
         var descriptionLength = categoryDTO.getDescription().length();
         if (descriptionLength > config.getMaxCategoryDescriptionLength())
             throw new InvalidDTOException(
-                    String.format(EnglishStrings.TOO_LONG_CATEGORY_DESCRIPTION.getValue(), descriptionLength, config.getMaxCategoryDescriptionLength()));
+                EnglishStrings.TOO_LONG_CATEGORY_DESCRIPTION
+                    .formatted(descriptionLength, config.getMaxCategoryDescriptionLength()));
     }
     private void assertExists(Long id) {
         if (!repository.existsById(id))

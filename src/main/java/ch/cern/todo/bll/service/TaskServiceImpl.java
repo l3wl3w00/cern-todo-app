@@ -73,20 +73,28 @@ public class TaskServiceImpl implements TaskService {
     private void assertValid(TaskDTO taskDTO){
         assertDescriptionLengthValid(taskDTO);
         assertNameLengthValid(taskDTO);
+        assertDeadlineNotNull(taskDTO);
+    }
+
+    private void assertDeadlineNotNull(TaskDTO taskDTO) {
+        if (taskDTO.getDeadline() == null)
+            throw new InvalidDTOException(EnglishStrings.DEADLINE_IS_NULL.getValue());
     }
 
     private void assertNameLengthValid(TaskDTO taskDTO) {
         var nameLength = taskDTO.getName().length();
         if (nameLength > config.getMaxTaskNameLength())
             throw new InvalidDTOException(
-                    String.format(EnglishStrings.TOO_LONG_TASK_NAME.getValue(), nameLength, config.getMaxTaskNameLength()));
+                EnglishStrings.TOO_LONG_TASK_NAME
+                    .formatted(nameLength, config.getMaxTaskNameLength()));
     }
 
     private void assertDescriptionLengthValid(TaskDTO taskDTO) {
         var descriptionLength = taskDTO.getDescription().length();
         if (descriptionLength > config.getMaxTaskDescriptionLength())
             throw new InvalidDTOException(
-                    String.format(EnglishStrings.TOO_LONG_TASK_DESCRIPTION.getValue(), descriptionLength, config.getMaxTaskDescriptionLength()));
+                EnglishStrings.TOO_LONG_TASK_DESCRIPTION
+                    .formatted(descriptionLength,config.getMaxTaskDescriptionLength()));
     }
 
     private ResponseTaskDTO saveTask(TaskDTO taskDTO, Consumer<TaskEntity> actionOnEntityBeforeSave) {
@@ -112,6 +120,6 @@ public class TaskServiceImpl implements TaskService {
         return categoryRepository
                 .findByName(name)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("No category was found with name " + name));
+                        new EntityNotFoundException(EnglishStrings.NO_CATEGORY.formatted(name)));
     }
 }
