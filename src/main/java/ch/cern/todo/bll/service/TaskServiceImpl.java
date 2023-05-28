@@ -73,6 +73,13 @@ public class TaskServiceImpl implements TaskService {
     private void assertValid(TaskDTO taskDTO){
         assertDescriptionLengthValid(taskDTO);
         assertNameLengthValid(taskDTO);
+        assertDeadlineNotNull(taskDTO);
+    }
+
+    private void assertDeadlineNotNull(TaskDTO taskDTO) {
+        if (taskDTO.getDeadline() == null)
+            throw new InvalidDTOException(
+                    String.format(EnglishStrings.DEADLINE_IS_NULL.getValue()));
     }
 
     private void assertNameLengthValid(TaskDTO taskDTO) {
