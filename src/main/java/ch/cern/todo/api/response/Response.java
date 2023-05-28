@@ -8,10 +8,10 @@ import org.springframework.http.HttpStatus;
 
 @Data
 public class Response<DTO> {
-    String statusName;
-    Integer statusCode;
-    String description = "";
-    String additionalInfo = "";
+    private String statusName;
+    private Integer statusCode;
+    private String description = "";
+    private String additionalInfo = "";
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     DTO content;
