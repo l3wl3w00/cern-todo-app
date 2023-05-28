@@ -6,10 +6,10 @@ import ch.cern.todo.api.response.Response;
 import ch.cern.todo.bll.dto.NoContentDTO;
 import ch.cern.todo.bll.dto.ResponseCategoryDTO;
 import ch.cern.todo.bll.interfaces.CategoryService;
-import ch.cern.todo.config.Config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 /**
@@ -29,8 +29,10 @@ public class CategoryController {
      * @return The categories
      */
     @GetMapping
-    Response<Collection<ResponseCategoryDTO>> getAll() {;
-        return responseFactory.ok(categoryService::getAll);
+    Response<Collection<ResponseCategoryDTO>> getAll(HttpServletResponse response) {;
+        return responseFactory
+                .ok(categoryService::getAll)
+                .setProperResponseValue(response);
     }
 
     /**
@@ -41,8 +43,10 @@ public class CategoryController {
      * @return The resource or a response that describes the problem with getting the resource
      */
     @GetMapping("{id}")
-    Response<ResponseCategoryDTO> getById(@PathVariable Long id) {
-        return responseFactory.okOrHandleError(() -> categoryService.getById(id));
+    Response<ResponseCategoryDTO> getById(@PathVariable Long id, HttpServletResponse response) {
+        return responseFactory
+                .okOrHandleError(() -> categoryService.getById(id))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -55,8 +59,10 @@ public class CategoryController {
      * @return The created resource or a response that describes the problem with creating the resource
      */
     @PostMapping
-    Response<ResponseCategoryDTO> add(@RequestBody CategoryDTO body) {
-        return responseFactory.createdOrHandleError(() -> categoryService.add(body));
+    Response<ResponseCategoryDTO> add(@RequestBody CategoryDTO body, HttpServletResponse response) {
+        return responseFactory
+                .createdOrHandleError(() -> categoryService.add(body))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -71,8 +77,10 @@ public class CategoryController {
      * @return The modified resource or a response that describes the problem with modifying the resource
      */
     @PutMapping("{id}")
-    Response<ResponseCategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO body) {
-        return responseFactory.okOrHandleError(() -> categoryService.update(id, body));
+    Response<ResponseCategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO body, HttpServletResponse response) {
+        return responseFactory
+                .okOrHandleError(() -> categoryService.update(id, body))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -83,7 +91,9 @@ public class CategoryController {
      * @return No content (204) http response or a response that describes the problem with deleting the resource
      */
     @DeleteMapping("{id}")
-    Response<NoContentDTO> deleteById(@PathVariable Long id) {
-        return responseFactory.deletedOrHandleError(() -> categoryService.deleteById(id));
+    Response<NoContentDTO> deleteById(@PathVariable Long id, HttpServletResponse response) {
+        return responseFactory
+                .deletedOrHandleError(() -> categoryService.deleteById(id))
+                .setProperResponseValue(response);
     }
 }
