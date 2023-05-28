@@ -9,6 +9,7 @@ import ch.cern.todo.bll.interfaces.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 /**
@@ -29,8 +30,10 @@ public class TaskController {
      * @return The tasks
      */
     @GetMapping
-    Response<Collection<ResponseTaskDTO>> getAll() {
-        return responseFactory.ok(taskService::getAll);
+    Response<Collection<ResponseTaskDTO>> getAll(HttpServletResponse response) {
+        return responseFactory
+                .ok(taskService::getAll)
+                .setProperResponseValue(response);
     }
 
     /**
@@ -41,8 +44,10 @@ public class TaskController {
      * @return The resource or a response that describes the problem with getting the resource
      */
     @GetMapping("{id}")
-    Response<ResponseTaskDTO> getById(@PathVariable Long id) {
-        return responseFactory.okOrHandleError(() -> taskService.getById(id));
+    Response<ResponseTaskDTO> getById(@PathVariable Long id, HttpServletResponse response) {
+        return responseFactory
+                .okOrHandleError(() -> taskService.getById(id))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -56,8 +61,10 @@ public class TaskController {
      * @return The created resource or a response that describes the problem with creating the resource
      */
     @PostMapping
-    Response<ResponseTaskDTO> add(@RequestBody TaskDTO body) {
-        return responseFactory.createdOrHandleError(() -> taskService.add(body));
+    Response<ResponseTaskDTO> add(@RequestBody TaskDTO body, HttpServletResponse response) {
+        return responseFactory
+                .createdOrHandleError(() -> taskService.add(body))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -72,8 +79,10 @@ public class TaskController {
      * @return The modified resource or a response that describes the problem with modifying the resource
      */
     @PutMapping("{id}")
-    Response<ResponseTaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO body) {
-        return responseFactory.okOrHandleError(() -> taskService.update(id,body));
+    Response<ResponseTaskDTO> update(@PathVariable Long id, @RequestBody TaskDTO body, HttpServletResponse response) {
+        return responseFactory
+                .okOrHandleError(() -> taskService.update(id,body))
+                .setProperResponseValue(response);
     }
 
     /**
@@ -84,8 +93,9 @@ public class TaskController {
      * @return No content (204) http response or a response that describes the problem with deleting the resource
      */
     @DeleteMapping("{id}")
-    Response<NoContentDTO> deleteById(@PathVariable Long id) {
-        return responseFactory.deletedOrHandleError(() -> taskService.deleteById(id));
+    Response<NoContentDTO> deleteById(@PathVariable Long id, HttpServletResponse response) {
+        return responseFactory.deletedOrHandleError(() -> taskService.deleteById(id))
+                .setProperResponseValue(response);
     }
 
 

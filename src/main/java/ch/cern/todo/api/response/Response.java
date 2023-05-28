@@ -2,10 +2,11 @@ package ch.cern.todo.api.response;
 
 import ch.cern.todo.bll.constants.EnglishStrings;
 import ch.cern.todo.bll.dto.NoContentDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Data
 public class Response<CONTENT_TYPE> {
@@ -17,7 +18,10 @@ public class Response<CONTENT_TYPE> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     CONTENT_TYPE content;
 
-
+    public Response<CONTENT_TYPE> setProperResponseValue(HttpServletResponse response) {
+        response.setStatus(statusCode);
+        return this;
+    }
     protected void setStatus(HttpStatus status) {
         setStatusCode(status.value());
         setStatusName(status.getReasonPhrase());
