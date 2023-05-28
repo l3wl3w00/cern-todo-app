@@ -1,7 +1,6 @@
 package ch.cern.todo.bll.constants;
 
 import lombok.Getter;
-import org.apache.el.ValueExpressionImpl;
 
 public enum EnglishStrings {
     SHOULD_BE("It is %d characters, and it should be %d or less!"),
