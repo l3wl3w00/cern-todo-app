@@ -37,4 +37,4 @@ out/
 .vscode/
 
 ### h2 db file ###
-mydb.mv.db
+db/
