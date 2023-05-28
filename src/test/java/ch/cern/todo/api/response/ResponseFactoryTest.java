@@ -15,14 +15,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ResponseFactoryTest {
-    private Supplier<NoContentDTO> noContentSupplier;
     private ResponseFactory responseFactory;
     private String exceptionMessage;
 
     @BeforeEach
     void setUp() {
         exceptionMessage = "Exception Message";
-        noContentSupplier = NoContentDTO::new;
         responseFactory = new ResponseFactory();
     }
     @Test
