@@ -6,7 +6,7 @@ import ch.cern.todo.bll.dto.NoContentDTO;
 
 public class EntityNotFoundException extends BusinessLogicException {
     public <T> EntityNotFoundException(Class<T> type, Long id) {
-        super(String.format(EnglishStrings.NO_ENTITY.getValue(), type.getSimpleName(), id));
+        super(EnglishStrings.NO_ENTITY.formatted(type.getSimpleName(), id));
     }
 
     public EntityNotFoundException(String message) {

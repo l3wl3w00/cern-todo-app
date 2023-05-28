@@ -1,5 +1,6 @@
 package ch.cern.todo.api.response;
 
+import ch.cern.todo.bll.constants.EnglishStrings;
 import ch.cern.todo.bll.dto.NoContentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -25,14 +26,14 @@ public class Response<CONTENT_TYPE> {
     public static <CONTENT_TYPE> Response<CONTENT_TYPE> conflict(String message) {
         Response<CONTENT_TYPE> response =  new Response<>();
         response.setStatus(HttpStatus.CONFLICT);
-        response.setDescription("The requested operation cannot be performed due to a constraint violation");
+        response.setDescription(EnglishStrings.CONSTRAINT_VIOLATION.getValue());
         response.setAdditionalInfo(message);
         return response;
     }
     public static <CONTENT_TYPE> Response<CONTENT_TYPE> badRequest(String message) {
         Response<CONTENT_TYPE> response =  new Response<>();
         response.setStatus(HttpStatus.BAD_REQUEST);
-        response.setDescription("The request is invalid");
+        response.setDescription(EnglishStrings.INVALID_REQUEST.getValue());
         response.setAdditionalInfo(message);
         return response;
     }
@@ -42,14 +43,14 @@ public class Response<CONTENT_TYPE> {
     public static <CONTENT_TYPE> Response<CONTENT_TYPE> notFound(String message) {
         Response<CONTENT_TYPE> response =  new Response<>();
         response.setStatus(HttpStatus.NOT_FOUND);
-        response.setDescription("The resource you are trying to access does not exist");
+        response.setDescription(EnglishStrings.RESOURCE_DOESNT_EXIST.getValue());
         response.setAdditionalInfo(message);
         return response;
     }
     public static Response<NoContentDTO> deleted() {
         Response<NoContentDTO> response =  new Response<>();
         response.setStatus(HttpStatus.NO_CONTENT);
-        response.setDescription("The resource was deleted");
+        response.setDescription(EnglishStrings.RESOURCE_WAS_DELETED.getValue());
         return response;
     }
 
