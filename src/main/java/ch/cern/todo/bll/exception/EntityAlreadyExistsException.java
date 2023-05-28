@@ -1,6 +1,7 @@
 package ch.cern.todo.bll.exception;
 
 import ch.cern.todo.api.response.Response;
+import ch.cern.todo.bll.dto.NoContentDTO;
 
 public class EntityAlreadyExistsException extends BusinessLogicException {
     public EntityAlreadyExistsException(String message) {
@@ -8,7 +9,7 @@ public class EntityAlreadyExistsException extends BusinessLogicException {
     }
 
     @Override
-    public Response createResponse() {
+    public <DTO> Response<DTO> createResponse() {
         return Response.conflict(getMessage());
     }
 }

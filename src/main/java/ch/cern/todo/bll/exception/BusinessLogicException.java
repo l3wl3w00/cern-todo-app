@@ -1,6 +1,7 @@
 package ch.cern.todo.bll.exception;
 
 import ch.cern.todo.api.response.Response;
+import ch.cern.todo.bll.dto.NoContentDTO;
 
 import java.util.function.Supplier;
 
@@ -9,5 +10,5 @@ public abstract class BusinessLogicException extends RuntimeException {
         super(message);
     }
 
-    public abstract Response createResponse();
+    public abstract <DTO> Response<DTO> createResponse();
 }

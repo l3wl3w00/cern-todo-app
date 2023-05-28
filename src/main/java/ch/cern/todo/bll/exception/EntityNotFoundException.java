@@ -2,6 +2,7 @@ package ch.cern.todo.bll.exception;
 
 import ch.cern.todo.api.response.Response;
 import ch.cern.todo.bll.constants.EnglishStrings;
+import ch.cern.todo.bll.dto.NoContentDTO;
 
 public class EntityNotFoundException extends BusinessLogicException {
     public <T> EntityNotFoundException(Class<T> type, Long id) {
@@ -13,7 +14,7 @@ public class EntityNotFoundException extends BusinessLogicException {
     }
 
     @Override
-    public Response createResponse() {
+    public <DTO> Response<DTO> createResponse() {
         return Response.notFound(getMessage());
     }
 }
